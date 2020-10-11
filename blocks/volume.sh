@@ -1,9 +1,4 @@
 #!/bin/sh
 
-volstat=$(pamixer --get-mute --get-volume)
+amixer get Master | awk -F'[][]' 'END{ print "🔉"$2 }'
 
-if "${volstat% *}" ; then
-    echo "${volstat#* }%"
-else
-    echo "${volstat#* }%"
-fi
