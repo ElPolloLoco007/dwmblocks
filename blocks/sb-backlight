@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Displays number of unread news items and an loading icon if updating.
+# When clicked, brings up `newsboat`.
+
+case $BUTTON in
+        1) setsid st -e newsboat ;;
+	    2) setsid -f newsup >/dev/null exit ;;
+        3) st -e code "$0" ;;
+        4) brightness +10; kill -36 $(pidof dwmblocks) ;;
+        5) brightness -10; kill -36 $(pidof dwmblocks) ;;
+
+esac
+
+current="$(cat /sys/class/backlight/amdgpu_bl0/brightness)"
+backlight=$(awk -v n="$current" 'BEGIN{ print int(n/255*100) }')
+
+echo "$backlight%"
+

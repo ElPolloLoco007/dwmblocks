@@ -1,0 +1,12 @@
+#!/bin/bash
+case $BUTTON in
+        1) x=$(zenity --entry --entry-text="" --text="Question" ) 
+        answer=$(tuxi -r $x)
+        dunstify "$x" "$answer?" -u normal	 ;;	
+esac
+
+
+
+
+
+

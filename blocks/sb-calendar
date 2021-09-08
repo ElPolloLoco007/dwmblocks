@@ -1,0 +1,12 @@
+#!/bin/sh
+
+clock=$(date '+%I')
+
+case $BUTTON in
+	#1) "$TERMINAL" -e calendar ;;
+	2) st -e calendar ;;
+	6) st -e code "$0" ;;
+esac
+
+LC_TIME="fo_FO.UTF-8" date "+%b %d %Y"
+

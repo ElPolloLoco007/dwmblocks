@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Displays number of unread news items and an loading icon if updating.
+# When clicked, brings up `newsboat`.
+
+x="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)"
+
+
+case $BUTTON in
+        1) dunstify "Battery info" "$x" -u normal ;;	
+esac
+
+
+bat="$(cat /sys/class/power_supply/BAT0/capacity)"
+
+echo "$bat%"
+

@@ -1,0 +1,11 @@
+#!/bin/bash
+red=`tput setaf 1`
+green=`tput setaf 2`
+reset=`tput sgr0`
+s=""
+i=$(ssh pi@192.168.1.10 '(systemctl show -p ActiveState --value xxx)');
+case $i in
+    active) s=${green}yay;;
+    inactive) s=${red}nay;;
+esac
+echo "$s"
