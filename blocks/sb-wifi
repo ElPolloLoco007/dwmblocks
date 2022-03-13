@@ -1,15 +1,32 @@
 #!/bin/bash
 if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null ; then
 	wifiicon="直"
-	wifisignal="$(awk '/^\s*w/ { print "", int($3 * 100 / 70) "%" }' /proc/net/wireless)" 
+	tmp="$(awk 'NR==3 {printf $3}' /proc/net/wireless)" 
+	wifisignal=${tmp::-1}
+
+    if [ "$wifisignal" -gt 0 ] && [ "$wifisignal" -le 25 ]; then
+        wifiicon="^c#bb5b3e^直^d^" 
+    fi
+    if [ "$wifisignal" -gt 25 ] && [ "$wifisignal" -le 50 ]; then
+        wifiicon="^c#f78f6f^直^d^" 
+        
+    fi
+    if [ "$wifisignal" -gt 49 ] && [ "$wifisignal" -le 75 ]; then
+        wifiicon="^c#ffc6a3^直 ^d^" 
+        
+    fi
+    if [ "$wifisignal" -gt 74 ]; then
+        wifiicon="^c#7cca69^直 ^d^"        
+    fi
+
 elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null ; then
 	wifiicon="睊" 
 fi
-vpn="$(sed "s/.*/🔒/" /sys/class/net/tun*/operstate 2>/dev/null)"
+vpn="$(sed "s/.*//" /sys/class/net/tun*/operstate 2>/dev/null)"
 
 if [ -z "$vpn" ]
 then
-      printf "%s%s\n" "$wifiicon$wifisignal" 
+      printf "%s""^b#bb5b3e^$wifiicon^d^" 
 else
-      printf "%s%s%s\n" "$vpn$wifiicon$wifisignal"  
+      printf "%s""$wifiicon"  
 fi

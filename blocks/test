@@ -1,19 +1,117 @@
 #!/bin/bash
-for battery in /sys/class/power_supply/BAT?*; do
-	# If non-first battery, print a space separator.
-	[ -n "${capacity+x}" ] && printf " "
-	# Sets up the status and capacity
-	case "$(cat "$battery/status" 2>&1)" in
-		"Full") status="full" ;;
-		"Discharging") status="discharging" ;;
-		"Charging") status="charging" ;;
-		"Not charging") status="not chaging" ;;
-		"Unknown") status="unknown" ;;
-		*) exit 1 ;;
-	esac
-	capacity="$(cat "$battery/capacity" 2>&1)"
-	# Will make a warn variable if discharging and low
-	[ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="WARNING"
-	# Prints the info
-	printf "%s%s%d%%" "$status" "$warn" "$capacity"; unset warn
-done && printf "\\n"
+
+show_colour() {
+    for i in $*; do
+        printf "#$i "
+    done
+    echo
+    
+    perl -e 'foreach $a(@ARGV){print "\e[48:2::".join(":",unpack("C*",pack("H*",$a)))."m      \e[49m  "};print "\n"' "$@"
+}
+
+echo
+echo
+echo "https://mycolor.space/?hex=%23FFFF7A&sub=1"
+echo
+echo
+
+
+echo "Generic Gradient"
+show_colour "ffff7a" "a0e385" "50bf93" "129893" "1f6f7e" "2f4858"
+echo
+
+echo "Matching Gradient"
+show_colour "ffff7a" "bde66e" "7cca69" "35ad67" "008f65" "007160"
+echo
+
+echo "Spot Palette"
+show_colour "ffff7a" "c6c38a" "f6f2cb" "005248"
+echo
+
+echo "Twisted Spot Palette"
+show_colour "ffff7a" "006b60" "c3fcf2" "659b91"
+echo
+
+echo "Classy Palette"
+show_colour "ffff7a" "494738" "aeac9a" "00fbfa" "00c1c2"
+echo
+
+echo "Cube Palette"
+show_colour "ffff7a" "c2a789" "c3fcf2"
+echo
+
+echo "Switch Palette"
+show_colour "ffff7a" "373f00" "006e60" "f2fedc"
+echo
+
+echo "SmallSwitch Palette"
+show_colour "ffff7a" "e9e1d9" "90724e"
+echo
+
+echo "Skip Gradient"
+show_colour "ffff7a" "ffc6a3" "f78f6f" "bb5b3e"
+echo
+
+echo "Natural Palette"
+show_colour "ffff7a" "959366" "fcfaea" "f2fedc"
+echo
+
+echo "Matching Palette"
+show_colour "ffff7a" "605f4f" "aeac9a" "00fffc" "00ddc3"
+echo
+
+echo "Squash Palette"
+show_colour "ffff7a" "00f4ff" "ff9bae"
+echo
+
+echo "Grey Friends"
+show_colour "ffff7a" "494738" "aeac9a"
+echo
+
+echo "Dotting Palette"
+show_colour "ffff7a" "aeac9a" "00fbfa" "95b1af"
+echo
+
+echo "Skip Shade Gradient"
+show_colour "ffff7a" "ffe577" "ffcd82" "ffb895"
+echo
+
+echo "Threedom"
+show_colour "ffff7a" "00f5ff" "ff87f4"
+echo
+
+echo "Highlight Palette"
+show_colour "ffff7a" "95935d" "f2fedc" "1b3d2f"
+echo
+
+echo "Neighbor Palette"
+show_colour "ffff7a" "c2a789" "947146" "514538"
+echo
+
+echo "Discreet Palette"
+show_colour "ffff7a" "959366" "fbfaec" "1b3d2f"
+echo
+
+echo "Dust Palette"
+show_colour "ffff7a" "494738" "aeac9a" "00fbfa"
+echo
+
+echo "Collective"
+show_colour "ffff7a" "8fdd4d" "00e5e6"
+echo
+
+echo "Friend palette"
+show_colour "ffff7a" "5a6400" "00e5e6" "006b60"
+echo
+
+echo "Pin Palette"
+show_colour "ffff7a" "95935d" "f2fedc" "459f92"
+echo
+
+echo "Shades"
+show_colour "ffff7a" "c5c844" "8d9300" "586200" "2f3400"
+echo
+
+echo "Random Shades"
+show_colour "ffff7a" "525c00" "f3f36f" "bec13e" "bbbe3b"
+echo

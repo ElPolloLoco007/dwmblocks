@@ -33,74 +33,71 @@ for battery in /sys/class/power_supply/BAT?*; do
         if [ "$status" = "discharging" ] || [ "$status" = "notchaging" ]; then
 
                 if [ "$capacity" -gt 0 ] && [ "$capacity" -le 10 ]; then
-                        icon=""
+                        icon="^c#bb5b3e^$capacity%^d^"
+                        dunstify "low battery" -u critical
                 fi
 
                 if [ "$capacity" -gt 9 ] && [ "$capacity" -le 20 ]; then
-                        icon=""
+                        icon="^c#bb5b3e^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 19 ] && [ "$capacity" -le 30 ]; then
-                        icon=""
+                        icon="^c#bb5b3e^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 29 ] && [ "$capacity" -le 40 ]; then
-                        icon=""
+                        icon="^c#f78f6f^^d^"
                 fi
 
                 if [ "$capacity" -gt 39 ] && [ "$capacity" -le 50 ]; then
-                        icon=""
+                        icon="^c#f78f6f^^d^"
                 fi
 
                 if [ "$capacity" -gt 49 ] && [ "$capacity" -le 60 ]; then
-                        icon=""
+                        icon="^c#ffc6a3^^d^"
                 fi
 
                 if [ "$capacity" -gt 59 ] && [ "$capacity" -le 70 ]; then
-                        icon=""
+                        icon="^c#ffc6a3^^d^"
                 fi
 
                 if [ "$capacity" -gt 69 ] && [ "$capacity" -le 80 ]; then
-                        icon=""
+                        icon="^c#ffc6a3^^d^"
                 fi
 
                 if [ "$capacity" -gt 79 ] && [ "$capacity" -le 90 ]; then
-                        icon=""
+                        icon="^c#7cca69^^d^"
                 fi
 
                 if [ "$capacity" -gt 89 ] && [ "$capacity" -le 101 ]; then
-                        icon=""
+                        icon="^c#7cca69^^d^"
                 fi
         fi
 
         if [ "$status" = "charging" ]; then
 
                 if [ "$capacity" -gt 0 ] && [ "$capacity" -le 20 ]; then
-                        icon=" "
+                        icon="^c#007160^^d^"
                 fi
 
                 if [ "$capacity" -gt 19 ] && [ "$capacity" -le 40 ]; then
-                        icon=" "
+                        icon="^c#008f65^^d^"
                 fi
 
                 if [ "$capacity" -gt 39 ] && [ "$capacity" -le 60 ]; then
-                        icon=" "
+                        icon="^c#35ad67^^d^"
                 fi
 
                 if [ "$capacity" -gt 59 ] && [ "$capacity" -le 80 ]; then
-                        icon=" "
+                        icon="^c#7cca69^^d^"
                 fi
 
                 if [ "$capacity" -gt 79 ] && [ "$capacity" -le 90 ]; then
-                        icon=" "
+                        icon="^c#bde66e^^d^"
                 fi
                 if [ "$capacity" -gt 89 ]; then
-                        icon=" "
+                        icon="^c#ffff7a^^d^"
                 fi
         fi
-
-        # Will make a warn variable if discharging and low
-        # [ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn=""
-        # Prints the info
-        printf "%s%s%d%%" "$icon" "$warn" "$capacity"
+        printf "%s" "$icon"
 done && printf "\\n"
