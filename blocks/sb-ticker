@@ -1,0 +1,31 @@
+#!/bin/bash
+x="This is just a test"
+value=`cat /suckless/dwmblocks/blocks/ok.txt`
+length=${#x}
+limit=${1:-10}
+nr1=-10
+num1="$((nr1+value))"
+n=${1:-10}
+s=""
+tmp2="$((length+10))"
+ 
+length2="$((length+1))"
+if [[ "$value" -gt "10" ]] && [[ "value" -lt "length2" ]]; then
+    s=$(echo ${x:$((value-10)):$(($value))})
+    str=$(printf '%*s' "$n" "$s")
+ 
+elif [[ "$value" -gt "10" ]] && [[ "value" -gt "length" ]]; then
+    s=$(echo ${x:$((value-10)):$(($value))})
+    str=$s$(printf '%*s' "$n" "")
+else
+    s=$(echo ${x:0:$(($value))})
+    str=$(printf '%*s' "$n" "$s")
+fi
+var=$(echo "${str}"|grep -Eo "^.{1,$limit}")
+tmp="$((1+value))"
+echo $tmp > /suckless/dwmblocks/blocks/ok.txt
+ 
+if [[ "tmp" -gt "tmp2" ]]; then
+    echo "0" > /suckless/dwmblocks/blocks/ok.txt
+fi
+printf '|%s|\n' "${var}"

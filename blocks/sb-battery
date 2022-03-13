@@ -1,17 +1,106 @@
 #!/bin/sh
 
-# Displays number of unread news items and an loading icon if updating.
-# When clicked, brings up `newsboat`.
-
-x="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)"
-
-
 case $BUTTON in
-        1) dunstify "Battery info" "$x" -u normal ;;	
+1) x="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)"
+dunstify "Battery info" "$x" -u normal ;;
 esac
 
+icon=""
 
-bat="$(cat /sys/class/power_supply/BAT0/capacity)"
+for battery in /sys/class/power_supply/BAT?*; do
+        # If non-first battery, print a space separator.
+        [ -n "${capacity+x}" ] && printf " "
+        # Sets up the status and capacity
+        case "$(cat "$battery/status" 2>&1)" in
+        "Full") status="full" ;;
+        "Discharging") status="discharging" ;;
+        "Charging") status="charging" ;;
+        "Not charging") status="notchaging" ;;
+        "Unknown") status="unknown" ;;
+        *) exit 1 ;;
+        esac
+        capacity="$(cat "$battery/capacity" 2>&1)"
+        # full
+        if [ "$status" = "full" ]; then
+                icon=""
+        fi
 
-echo "$bat%"
+        if [ "$status" = "unknown" ]; then
+                icon=""
+        fi
 
+        # discarging or not charging
+        if [ "$status" = "discharging" ] || [ "$status" = "notchaging" ]; then
+
+                if [ "$capacity" -gt 0 ] && [ "$capacity" -le 10 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 9 ] && [ "$capacity" -le 20 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 19 ] && [ "$capacity" -le 30 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 29 ] && [ "$capacity" -le 40 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 39 ] && [ "$capacity" -le 50 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 49 ] && [ "$capacity" -le 60 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 59 ] && [ "$capacity" -le 70 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 69 ] && [ "$capacity" -le 80 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 79 ] && [ "$capacity" -le 90 ]; then
+                        icon=""
+                fi
+
+                if [ "$capacity" -gt 89 ] && [ "$capacity" -le 101 ]; then
+                        icon=""
+                fi
+        fi
+
+        if [ "$status" = "charging" ]; then
+
+                if [ "$capacity" -gt 0 ] && [ "$capacity" -le 20 ]; then
+                        icon=" "
+                fi
+
+                if [ "$capacity" -gt 19 ] && [ "$capacity" -le 40 ]; then
+                        icon=" "
+                fi
+
+                if [ "$capacity" -gt 39 ] && [ "$capacity" -le 60 ]; then
+                        icon=" "
+                fi
+
+                if [ "$capacity" -gt 59 ] && [ "$capacity" -le 80 ]; then
+                        icon=" "
+                fi
+
+                if [ "$capacity" -gt 79 ] && [ "$capacity" -le 90 ]; then
+                        icon=" "
+                fi
+                if [ "$capacity" -gt 89 ]; then
+                        icon=" "
+                fi
+        fi
+
+        # Will make a warn variable if discharging and low
+        # [ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn=""
+        # Prints the info
+        printf "%s%s%d%%" "$icon" "$warn" "$capacity"
+done && printf "\\n"

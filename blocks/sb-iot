@@ -1,31 +1,24 @@
 #!/bin/sh
 
-
-
-s=""
-
-declare -A arr
-
-arr+=(["pi0"]=192.168.1.220 ["pi1"]=192.168.1.221 ["pi2"]=192.168.100.51  ["pi3"]=192.168.100.52 ["pi4"]=192.168.100.50 ["z1"]=192.168.1.10 ["z2"]=192.168.1.11)
-
-for key in ${!arr[@]}; do
-	# echo ${key} ${arr[${key}]}
-
-	if ping -c1 -W1 ${arr[${key}]} &>/dev/null; then
-		temp=$(ssh pi@${arr[${key}]} '(/opt/vc/bin/vcgencmd measure_temp )')
-		temp="${temp:5}"
-		temp=${temp::-4}
-		s+="󰌘 ${key}: "$temp"C\n"
-	else
-		s+="󰌙 ${key} no connection\n"
-	fi
-done
-
 case $BUTTON in
-        1) dunstify "Internet of things" "$s" -u normal ;;	
+1)
+	s="Status-------\n"
+
+	declare -A arr
+
+	arr+=(["p1"]=192.168.100.1 ["p2"]=192.168.100.50 ["p3"]=192.168.100.51 ["p4"]=192.168.100.52 ["p5"]=192.168.8.20 ["z1"]=192.168.8.10 ["z2"]=192.168.8.11 ["z3"]=192.168.8.12)
+
+	for key in ${!arr[@]}; do
+		# echo ${key} ${arr[${key}]}
+
+		if ping -c1 -W1 ${arr[${key}]} &>/dev/null; then
+			temp=$(ssh pi@${arr[${key}]} '(/opt/vc/bin/vcgencmd measure_temp )')
+			temp="${temp:5}"
+			temp=${temp::-4}
+			s+="󰌘 ${key}: "$temp"C\n"
+		else
+			s+="󰌙 ${key}: no connection\n"
+		fi
+	done
+	dunstify "Internet of things" "$s" -u normal
 esac
-## now loop through the above array
-
-# You can access them using echo "${arr[0]}", "${arr[1]}" also
-
-# icon="󰌗"

@@ -24,7 +24,10 @@ fi
 case $BUTTON in
 1) dunstify "Alsamixer" "$icon $micvol\n$icon2 $vol" -u normal ;;
 2) st -e alsamixer ;;
-3) st -e code "$0" ;;
+3) sd-volonoff ;;
+4) sd-volup ;;
+5) sd-voldown ;;
+
 esac
 
-echo $vol
+echo $icon2$vol $icon

@@ -8,10 +8,10 @@ case $BUTTON in
 	2) setsid -f newsup >/dev/null exit ;;
         3) st -e code "$0" ;;
 esac
+a="$(newsboat -x print-unread | awk '{print $1}')"
 
-x=$(newsboat -x print-unread | awk '{ if($1>0) print  $1}')
-if [ "$x" -eq "$x" ] 2>/dev/null; then
-  echo " "$x
+if [ "$a" = "Error:" ]; then
+    echo " ?"
 else
-  echo " "
+    echo " " "$a"
 fi
