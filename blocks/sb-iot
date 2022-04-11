@@ -1,23 +1,24 @@
-#!/bin/sh
+#!/bin/bash
 
+case $BUTTON in
 1)
 	con="Connected \n"
 	dis="Disconnected\n"
-	declare -A arr
 
-	arr+=(["p1"]=192.168.100.1 ["p2"]=192.168.100.50 ["p3"]=192.168.100.51 ["p4"]=192.168.100.52 ["p5"]=192.168.8.20 ["z1"]=192.168.8.10 ["z2"]=192.168.8.11 ["z3"]=192.168.8.12)
+	while IFS="" read -r p;
+	do
+		ip="$(echo "$p" | awk '{print $1;}')"
+		name="$(echo "$p" | awk '{print $2;}')"
 
-	for key in ${!arr[@]}; do
-		# echo ${key} ${arr[${key}]}
-
-		if ping -c1 -W1 ${arr[${key}]} &>/dev/null; then
-			temp=$(ssh pi@${arr[${key}]} '(vcgencmd measure_temp)')
+		if ping -c1 -W1 $ip &>/dev/null; then
+			temp=$(ssh pi@$ip '(vcgencmd measure_temp)')
 			temp="${temp:5}"
 			temp=${temp::-4}
-			con+="󰌘 ${key}: "$temp"C\n"
+			con+="󰌘 $name: "$temp"C\n"
 		else
-			dis+="󰌙 ${key}: no connection\n"
+			dis+="󰌙 $name: no connection\n"
 		fi
-	done
+
+	done < /home/helgi/.config/ip_addresses
 	dunstify "Internet of things" "$con$dis" -u normal
 esac
