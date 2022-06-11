@@ -8,6 +8,7 @@ case $BUTTON in
     2) setsid -f newsup >/dev/null exit ;;
     3) st -e code "$0" ;;
 esac
+
 stories="$(newsboat -x print-unread | awk '{print $1}')"
 if [ "$stories" = "Error:" ]; then
     printf "^c#2f4858^a ^d^"

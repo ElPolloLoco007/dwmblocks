@@ -1,22 +1,33 @@
-#!/bin/bash
-con="Connected \n"
-dis="Disconnected\n"
-while IFS="" read -r p || [ -n "$p" ]
-	do
-	ip="$(echo "$p" | awk '{print $1;}')"
-	name="$(echo "$p" | awk '{print $2;}')"
+ticker=$(shuf -n 1 ticker_stocklist)
+a=$(curl -s "https://query1.finance.yahoo.com/v7/finance/quote?symbols=SAVA,GME")
+#echo $a
 
-	echo $ip
-	echo $name
+symbols=$(echo $a | jq '.[] | .result' | jq '.[] | (.symbol|tostring)+":"')
+regularMarketPrices=$(echo $a | jq '.[] | .result' | jq '.[] | (.regularMarketPrice|tostring)')
+regularMarketChangePercents=$(echo $a | jq '.[] | .result' | jq '.[] | (.regularMarketChangePercent|tostring)')
 
-	if ping -c1 -W1 $ip &>/dev/null; then
-		temp=$(ssh pi@$ip '(vcgencmd measure_temp)')
-		temp="${temp:5}"
-		temp=${temp::-4}
-		con+="󰌘 $name: "$temp"C\n"
-	else
-		dis+="󰌙 $name: no connection\n"
-	fi
+len=${#symbols[@]}
+stocks=("${symbols[@]}" "${regularMarketPrices[@]}" "${regularMarketChangePercents[@]}")
+combine=("${symbols[@]}" "${regularMarketPrices[@]}")
+echo ${stocks[@]}
+echo ${#stocks[@]}
+for ((i = 0; i < ${#stocks[@]}; ++i)); do
+    echo "$i"
+    echo "${stocks[$i]}"
 
-	done < /home/helgi/.config/ip_addresses
-	dunstify "Internet of things" "$con$dis" -u normal
+    # if ((i % 2)); then
+    # fi
+
+done
+
+# for item in ${items[@]}; do
+#     echo $item
+#     # whatever you are trying to do ...
+# done
+
+# myarray=($a)
+# rounded=$(printf "%.2f\n" ${myarray[0]})
+# rounded1=$(printf "%.2f\n" ${myarray[1]})
+
+# echo "$ticker:$rounded($rounded1%)" > ticker_stock
+#dunstify "Price" "$ticker: $a" -u normal
