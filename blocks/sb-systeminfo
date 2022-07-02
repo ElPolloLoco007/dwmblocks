@@ -1,0 +1,5 @@
+#!/bin/bash
+
+case $BUTTON in
+1) alacritty --hold -e neofetch sleep 4 ;;
+esac

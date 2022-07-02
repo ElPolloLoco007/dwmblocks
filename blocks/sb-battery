@@ -1,8 +1,10 @@
 #!/bin/sh
 
 case $BUTTON in
-1) x="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)"
-dunstify "Battery info" "$x" -u normal ;;
+1)
+        x="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)"
+        dunstify "Battery info" "$x" -u normal
+        ;;
 esac
 
 icon=""

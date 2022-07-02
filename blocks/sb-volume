@@ -9,15 +9,22 @@ micvol=$(amixer get Capture | awk -F'[][]' 'END{ print $2 }')
 icon=""
 
 case $BUTTON in
-    1) dunstify "Alsamixer" "$icon $micvol\n$icon2 $vol" -u normal ;;
-    2) st -e alsamixer ;;
-    3) sd-volonoff ;;
-    4) sd-vol up; notify-send -h int:value:$vol "volume"; sleep 3; killall dunst;;
-    5) sd-vol down; notify-send -h int:value:$vol "volume"; sleep 3; killall dunst;;
+1) dunstify "Alsamixer" "$icon $micvol\n$icon2 $vol" -u normal ;;
+2) alacritty -e alsamixer ;;
+3) sd-volonoff ;;
+4)
+    sd-vol up
+    notify-send -h int:value:$vol "volume"
+    sleep 3
+    killall dunst
+    ;;
+5)
+    sd-vol down
+    notify-send -h int:value:$vol "volume"
+    sleep 3
+    killall dunst
+    ;;
 esac
-
-
-
 
 if [[ "$mic" = 'on' ]]; then
     icon=""
@@ -28,23 +35,19 @@ fi
 if [[ "$volon" = 'on' ]]; then
     amixer -q sset Headphone on
     if [ "$vol" -gt 0 ] && [ "$vol" -le 25 ]; then
-        printf "^c#bb5b3e^󰕾^d^$icon" 
+        printf "^c#bb5b3e^󰕾^d^$icon"
     fi
     if [ "$vol" -gt 25 ] && [ "$vol" -le 50 ]; then
-        printf "^c#f78f6f^󰕾^d^$icon" 
-        
+        printf "^c#f78f6f^󰕾^d^$icon"
+
     fi
     if [ "$vol" -gt 49 ] && [ "$vol" -le 75 ]; then
-        printf "^c#ffc6a3^󰕾^d^$icon" 
-        
+        printf "^c#ffc6a3^󰕾^d^$icon"
+
     fi
     if [ "$vol" -gt 74 ]; then
-        printf "^c#ffff7a^󰕾^d^$icon"        
+        printf "^c#ffff7a^󰕾^d^$icon"
     fi
 else
-    printf "^c#f78f6f^󰖁^d^$icon" 
+    printf "^c#f78f6f^󰖁^d^$icon"
 fi
-
-
-
-

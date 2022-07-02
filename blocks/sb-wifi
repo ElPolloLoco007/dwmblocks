@@ -1,33 +1,32 @@
 #!/bin/bash
-if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null ; then
-	wifiicon="直"
-	tmp="$(awk 'NR==3 {printf $3}' /proc/net/wireless)" 
-	wifisignal=${tmp::-1}
+if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null; then
+    wifiicon="直"
+    tmp="$(awk 'NR==3 {printf $3}' /proc/net/wireless)"
+    wifisignal=${tmp::-1}
     wifiname="$(nmcli -f IN-USE,SIGNAL,SSID device wifi | awk '/^\*/{if (NR!=1) {print $3}}')"
     if [ "$wifisignal" -gt 0 ] && [ "$wifisignal" -le 25 ]; then
-        wifiicon="^c#bb5b3e^直^d^" 
+        wifiicon="^c#bb5b3e^直^d^"
     fi
     if [ "$wifisignal" -gt 25 ] && [ "$wifisignal" -le 50 ]; then
-        wifiicon="^c#f78f6f^直^d^" 
-        
+        wifiicon="^c#f78f6f^直^d^"
+
     fi
     if [ "$wifisignal" -gt 49 ] && [ "$wifisignal" -le 75 ]; then
-        wifiicon="^c#ffc6a3^直 ^d^" 
-        
+        wifiicon="^c#ffc6a3^直 ^d^"
+
     fi
     if [ "$wifisignal" -gt 74 ]; then
-        wifiicon="^c#7cca69^直 ^d^"        
+        wifiicon="^c#7cca69^直 ^d^"
     fi
 
-elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null ; then
-	wifiicon="睊 " 
+elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null; then
+    wifiicon="睊 "
 fi
 vpn="$(sed "s/.*//" /sys/class/net/tun*/operstate 2>/dev/null)"
 
-if [ -z "$vpn" ]
-then
-      printf "%s""$vpn$wifiicon$wifiname" 
+if [ -z "$vpn" ]; then
+    printf "%s""$vpn$wifiicon$wifiname"
 else
-      printf "%s""$wifiicon$wifiname"  
+    printf "%s""$wifiicon$wifiname"
 fi
 #pkill -RTMIN+6 dwmblocks &

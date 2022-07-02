@@ -1,31 +1,31 @@
 #!/bin/bash
 x="$(cat ticker_stock)"
-value=`cat /suckless/dwmblocks/blocks/ticker_counter.txt`
+value=$(cat /suckless/dwmblocks/blocks/ticker_counter.txt)
 length=${#x}
 limit=${1:-10}
 nr1=-10
-num1="$((nr1+value))"
+num1="$((nr1 + value))"
 n=${1:-10}
 s=""
-tmp2="$((length+10))"
- 
-length2="$((length+1))"
+tmp2="$((length + 10))"
+
+length2="$((length + 1))"
 if [[ "$value" -gt "10" ]] && [[ "value" -lt "length2" ]]; then
-    s=$(echo ${x:$((value-10)):$(($value))})
+    s=$(echo ${x:$((value - 10)):$(($value))})
     str=$(printf '%*s' "$n" "$s")
- 
+
 elif [[ "$value" -gt "10" ]] && [[ "value" -gt "length" ]]; then
-    s=$(echo ${x:$((value-10)):$(($value))})
+    s=$(echo ${x:$((value - 10)):$(($value))})
     str=$s$(printf '%*s' "$n" "")
 else
     s=$(echo ${x:0:$(($value))})
     str=$(printf '%*s' "$n" "$s")
 fi
-var=$(echo "${str}"|grep -Eo "^.{1,$limit}")
-tmp="$((1+value))"
-echo $tmp > /suckless/dwmblocks/blocks/ticker_counter.txt
- 
+var=$(echo "${str}" | grep -Eo "^.{1,$limit}")
+tmp="$((1 + value))"
+echo $tmp >/suckless/dwmblocks/blocks/ticker_counter.txt
+
 if [[ "tmp" -gt "tmp2" ]]; then
-    echo "0" > /suckless/dwmblocks/blocks/ticker_counter.txt
+    echo "0" >/suckless/dwmblocks/blocks/ticker_counter.txt
 fi
 printf '|%s|\n' "${var}"

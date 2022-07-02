@@ -1,17 +1,12 @@
 #!/bin/bash
 
-
 case $BUTTON in
-        1) ticker=$(zenity --entry --entry-text="" --text="Stock quote" ) 
+1)
+        ticker=$(zenity --entry --entry-text="" --text="Stock quote")
         a=$(curl -s "https://query1.finance.yahoo.com/v7/finance/quote?symbols=$ticker" | jq -r '.quoteResponse["result"][0] | "" + (.regularMarketPrice|tostring) +"  "+ (.regularMarketChangePercent|tostring)+"%"')
         rounded=$(printf "%.3f\n" "$a")
-        dunstify "Price" "$ticker: $a" -u normal ;;
-        2) alacritty --class stock-market -e stock-market ;;
-	3) alacritty -e code "$0" ;;
+        dunstify "Price" "$ticker: $a" -u normal
+        ;;
+2) alacritty --class stock-market -e stock-market ;;
+3) alacritty -e code "$0" ;;
 esac
-
-
-
-
-
-

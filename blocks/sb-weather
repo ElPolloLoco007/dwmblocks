@@ -1,17 +1,11 @@
 #!/bin/bash
 
-ansiweather -l Vestmanna -u metric -w true -s true -d true -a false  | sed 's/-/\n/g' | awk -F' ' 'NR==1 { print $6 $4$5 }'
+ansiweather -l Vestmanna -u metric -w true -s true -d true -a false | sed 's/-/\n/g' | awk -F' ' 'NR==1 { print $6 $4$5 }'
 
 case $BUTTON in
-        1) 
-        s="$(ansiweather -l Vestmanna -u metric -w true -s true -d true -a false  | sed 's/-/\n/g')"
-        dunstify "$s" -u normal ;;
-	3) alacritty -e code "$0" ;;
+1)
+        s="$(ansiweather -l Vestmanna -u metric -w true -s true -d true -a false | sed 's/-/\n/g')"
+        dunstify "$s" -u normal
+        ;;
+3) alacritty -e code "$0" ;;
 esac
-
-
-
-
-
-
-

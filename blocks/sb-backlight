@@ -5,15 +5,25 @@
 current="$(cat /sys/class/backlight/amdgpu_bl0/brightness)"
 backlight=$(awk -v n="$current" 'BEGIN{ print int(n/255*100) }')
 case $BUTTON in
-    1) setsid st -e newsboat ;;
-    2) setsid -f newsup >/dev/null exit ;;
-    3) st -e code "$0" ;;
-    4) brightness +10; kill -36 $(pidof dwmblocks); notify-send -h int:value:$backlight "backlight"; sleep 3; killall dunst;;
-    5) brightness -10; kill -36 $(pidof dwmblocks); notify-send -h int:value:$backlight "backlight"; sleep 3; killall dunst;;
-    
+1) setsid st -e newsboat ;;
+2) setsid -f newsup exit >/dev/null ;;
+3) alacritty -e code "$0" ;;
+4)
+    brightness +10
+    kill -36 $(pidof dwmblocks)
+    notify-send -h int:value:$backlight "backlight"
+    sleep 3
+    killall dunst
+    ;;
+5)
+    brightness -10
+    kill -36 $(pidof dwmblocks)
+    notify-send -h int:value:$backlight "backlight"
+    sleep 3
+    killall dunst
+    ;;
+
 esac
-
-
 
 if [ "$backlight" -gt 0 ] && [ "$backlight" -le 25 ]; then
     printf "^c#bb5b3e^󰖨^d^"
@@ -30,5 +40,3 @@ fi
 if [ "$backlight" -gt 74 ]; then
     printf "^c#ffff7a^󰖨^d^"
 fi
-
-

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo $(optimus-manager --status | awk 'NR==3 { print $5 }')

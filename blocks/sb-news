@@ -4,9 +4,9 @@
 # When clicked, brings up `newsboat`.
 
 case $BUTTON in
-    1) setsid alacritty -e newsboat ;;
-    2) setsid -f newsup >/dev/null exit ;;
-    3) st -e code "$0" ;;
+1) setsid alacritty -e newsboat ;;
+2) setsid -f newsup exit >/dev/null ;;
+3) st -e code "$0" ;;
 esac
 
 stories="$(newsboat -x print-unread | awk '{print $1}')"
@@ -20,7 +20,7 @@ else
     if [ "$stories" -gt 0 ] && [ "$stories" -le 4 ]; then
         printf "^c#ffc6a3^b ^d^"
     fi
-    
+
     if [ "$stories" -gt 3 ]; then
         printf "^c#35ad67^c ^d^"
     fi
