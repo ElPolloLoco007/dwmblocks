@@ -9,6 +9,8 @@ esac
 
 icon=""
 
+batLeft="$(cat /sys/class/power_supply/BAT0/capacity)"
+
 for battery in /sys/class/power_supply/BAT?*; do
         # If non-first battery, print a space separator.
         [ -n "${capacity+x}" ] && printf " "
@@ -35,43 +37,46 @@ for battery in /sys/class/power_supply/BAT?*; do
         if [ "$status" = "discharging" ] || [ "$status" = "notchaging" ]; then
 
                 if [ "$capacity" -gt 0 ] && [ "$capacity" -le 10 ]; then
-                        icon="^c#bb5b3e^$capacity%^d^"
+                        icon="^c#bb5b3e^$capacity%^d^$batLeft%"
                         dunstify "low battery" -u critical
                 fi
 
                 if [ "$capacity" -gt 9 ] && [ "$capacity" -le 20 ]; then
-                        icon="^c#bb5b3e^$capacity%^d^"
+                        icon="^c#bb5b3e^$capacity%^d^$batLeft%"
                 fi
 
                 if [ "$capacity" -gt 19 ] && [ "$capacity" -le 30 ]; then
-                        icon="^c#bb5b3e^$capacity%^d^"
+                        icon="^c#bb5b3e^$capacity%^d^$batLeft%"
                 fi
 
                 if [ "$capacity" -gt 29 ] && [ "$capacity" -le 40 ]; then
-                        icon="^c#f78f6f^^d^"
+                        icon="^c#f78f6f^^d^ $batLeft%"
                 fi
 
                 if [ "$capacity" -gt 39 ] && [ "$capacity" -le 50 ]; then
-                        icon="^c#f78f6f^^d^"
+                        icon="^c#f78f6f^^d^$batLeft%"
                 fi
 
                 if [ "$capacity" -gt 49 ] && [ "$capacity" -le 60 ]; then
-                        icon="^c#ffc6a3^^d^"
+                        icon="^c#ffc6a3^^d^$batLeft%"
                 fi
 
                 if [ "$capacity" -gt 59 ] && [ "$capacity" -le 70 ]; then
-                        icon="^c#ffc6a3^^d^"
+                        icon="^c#ffc6a3^^d^$batLeft%"
                 fi
 
                 if [ "$capacity" -gt 69 ] && [ "$capacity" -le 80 ]; then
-                        icon="^c#ffc6a3^^d^"
+                        icon="^c#ffc6a3^^d^$batLeft%"
                 fi
 
                 if [ "$capacity" -gt 79 ] && [ "$capacity" -le 90 ]; then
-                        icon="^c#7cca69^^d^"
+                        icon="^c#7cca69^^d^$batLeft%"
                 fi
 
-                if [ "$capacity" -gt 89 ] && [ "$capacity" -le 101 ]; then
+                if [ "$capacity" -gt 89 ] && [ "$capacity" -le 100 ]; then
+                        icon="^c#7cca69^^d^$batLeft%"
+                fi
+                if [ "$capacity" -eq 100 ]; then
                         icon="^c#7cca69^^d^"
                 fi
         fi
