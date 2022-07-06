@@ -4,22 +4,3 @@
 kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
 [[ "$kb" == "us" ]] && printf "^c#ffff7a^󰥻^d^" || printf "^c#00f5ff^󰥻^d^"
 
-case $BUTTON in
-1)
-	kb_choice="$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -h 26)"
-	kb="$(echo "$kb_choice" | awk '{print $3}')"
-	setxkbmap "$kb"
-	pkill -RTMIN+5 dwmblocks
-	;;
-3) notify-send "⌨  Keyboard/language module" "$(printf "%s" "\- Current layout: $(setxkbmap -query | grep -oP 'layout:\s*\K\w+')")
-- Scroll click to change keyboard." ;;
-4)
-	toggle-language
-	pkill -RTMIN+5 dwmblocks
-	;;
-5)
-	toggle-language
-	pkill -RTMIN+5 dwmblocks
-	;;
-
-esac
