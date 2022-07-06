@@ -5,18 +5,17 @@
 current="$(cat /sys/class/backlight/amdgpu_bl0/brightness)"
 backlight=$(awk -v n="$current" 'BEGIN{ print int(n/255*100) }')
 case $BUTTON in
-1) setsid st -e newsboat ;;
 2) setsid -f newsup exit >/dev/null ;;
 3) alacritty -e code "$0" ;;
 4)
-    brightness +10
+    dwm_brightness +10
     notify-send -h int:value:$backlight "backlight"
     pkill -RTMIN+6 dwmblocks
     sleep 3
     killall dunst
     ;;
 5)
-    brightness -10
+    dwm_brightness -10
     notify-send -h int:value:$backlight "backlight"
     pkill -RTMIN+6 dwmblocks
     sleep 3

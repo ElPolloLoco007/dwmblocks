@@ -3,8 +3,7 @@
 clock=$(date '+%I')
 
 case $BUTTON in
-#1) "$TERMINAL" -e calendar ;;
-2) st -e calendar ;;
+1) "$TERMINAL" -e calendar ;;
 6) st -e code "$0" ;;
 esac
 
