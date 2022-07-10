@@ -1,11 +1,15 @@
 #!/bin/bash
 
-ansiweather -l Vestmanna -u metric -w true -s true -d true -a false | sed 's/-/\n/g' | awk -F' ' 'NR==1 { print $6  $4$5 }'
+ansiweather -l Vestmanna -u metric -w true -s true -d true -a false | sed 's/-/\n/g' | awk -F' ' 'NR==1 { print $6" "$4 $5 $7 }'
 
 case $BUTTON in
 1)
-        s="$(ansiweather -l Vestmanna -u metric -w true -s true -d true -a false | sed 's/-/\n/g')"
-        dunstify "$s" -u normal
+        x=$(zenity --entry --entry-text="" --text="Location")
+        s="$(ansiweather -l $x -u metric -w true -s true -d true -a false | sed 's/-/\n/g')"
+        dunstify -u normal "$s"
         ;;
-3) alacritty -e code "$0" ;;
+2)
+        s="$(ansiweather -l Vestmanna -u metric -w true -s true -d true -a false | sed 's/-/\n/g')"
+        dunstify -u low "$s"
+        ;;
 esac

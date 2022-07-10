@@ -1,4 +1,22 @@
 #!/bin/bash
+
+case $BUTTON in
+1)
+    sudo nmcli dev wifi rescan
+
+    networks="$(nmcli --terse --fields SSID device wifi | sed -z 's/\n/\\n/g;s/\\$//' | sed 's/.\{2\}$//')"
+
+    network="$(echo -e $networks | dmenu -z 295 -p "network")"
+    if [ -n "$network" ]; then
+        pass=$(zenity --password --text="Password")
+        if [ -n "$pass" ]; then
+            sudo nmcli d wifi connect $network password $pass
+            pkill -RTMIN+8 dwmblocks
+        fi
+    fi
+    ;;
+esac
+
 if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null; then
     wifiicon="直"
     tmp="$(awk 'NR==3 {printf $3}' /proc/net/wireless)"
@@ -29,4 +47,3 @@ if [ -z "$vpn" ]; then
 else
     printf "%s""$wifiicon$wifiname"
 fi
-#pkill -RTMIN+6 dwmblocks &

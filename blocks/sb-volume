@@ -9,20 +9,16 @@ micvol=$(amixer get Capture | awk -F'[][]' 'END{ print $2 }')
 icon=""
 
 case $BUTTON in
-1) dunstify "Alsamixer" "$icon $micvol\n$icon2 $vol" -u normal ;;
+1) dunstify -u low "󰕾" "$icon $micvol\n$icon2 $vol" -u normal ;;
 2) alacritty -e alsamixer ;;
 3) alacritty -e dwm_vol vol && pkill -RTMIN+5 dwmblocks ;;
 4)
     dwm_vol up
-    notify-send -h int:value:$vol "volume"
-    sleep 3
-    killall dunst
+    dunstify -u low -r 31 -h int:value:$vol "󰕾"
     ;;
 5)
     dwm_vol down
-    notify-send -h int:value:$vol "volume"
-    sleep 3
-    killall dunst
+    dunstify -u low -r 31 "󰕾" -h int:value:$vol 
     ;;
 esac
 

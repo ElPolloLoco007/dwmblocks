@@ -1,6 +1,5 @@
-#!/bin/sh
-# works on any init system
-# requirements: dmenu, xorg-setxkbmap
+#!/bin/bash
+
 kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
-[[ "$kb" == "us" ]] && printf "^c#ffff7a^󰥻^d^" || printf "^c#00f5ff^󰥻^d^"
+[[ "$kb" == "us" ]] && printf "^c#ffff7a^󰥻$kb^d^" || printf "^c#00f5ff^󰥻$kb^d^"
 

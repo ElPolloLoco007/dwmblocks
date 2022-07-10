@@ -1,41 +1,37 @@
-#!/bin/sh
+#!/bin/bash
 
-# Displays number of unread news items and an loading icon if updating.
-# When clicked, brings up `newsboat`.
+
 current="$(cat /sys/class/backlight/amdgpu_bl0/brightness)"
-backlight=$(awk -v n="$current" 'BEGIN{ print int(n/255*100) }')
+backlight="$(awk -v n="$current" 'BEGIN{ print int(n/255*100) }')"
+
 case $BUTTON in
 2) setsid -f newsup exit >/dev/null ;;
 3) alacritty -e code "$0" ;;
 4)
     dwm_brightness +10
-    notify-send -h int:value:$backlight "backlight"
+    dunstify -r 30 -h int:value:$backlight "󰖨"
     pkill -RTMIN+6 dwmblocks
-    sleep 3
-    killall dunst
     ;;
 5)
     dwm_brightness -10
-    notify-send -h int:value:$backlight "backlight"
+    dunstify -r 30 -h int:value:$backlight "󰖨"
     pkill -RTMIN+6 dwmblocks
-    sleep 3
-    killall dunst
     ;;
 
 esac
 
-if [ "$backlight" -gt 0 ] && [ "$backlight" -le 25 ]; then
+if [ "$backlight" -ge 0 ] && [ "$backlight" -le 24 ]; then
     printf "^c#bb5b3e^󰖨^d^"
 fi
 
-if [ "$backlight" -gt 25 ] && [ "$backlight" -le 50 ]; then
+if [ "$backlight" -ge 25 ] && [ "$backlight" -le 49 ]; then
     printf "^c#f78f6f^󰖨^d^"
 fi
 
-if [ "$backlight" -gt 49 ] && [ "$backlight" -le 75 ]; then
+if [ "$backlight" -ge 49 ] && [ "$backlight" -le 74 ]; then
     printf "^c#ffc6a3^󰖨^d^"
 fi
 
-if [ "$backlight" -gt 74 ]; then
+if [ "$backlight" -ge 75 ]; then
     printf "^c#ffff7a^󰖨^d^"
 fi

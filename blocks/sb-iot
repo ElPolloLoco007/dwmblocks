@@ -21,7 +21,7 @@ case $BUTTON in
 
 	done </home/helgi/.config/ip_addresses
 	wait
-	dunstify "Internet of things" "$con$dis" -u normal
+	dunstify -u low "Internet of things" "$con$dis" -u normal
 	echo "$con$dis"
 	;;
 esac

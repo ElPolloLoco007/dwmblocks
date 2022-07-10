@@ -1,4 +1,5 @@
 #!/bin/bash
+
 x="$(cat ticker_stock)"
 value=$(cat /suckless/dwmblocks/blocks/ticker_counter.txt)
 length=${#x}
