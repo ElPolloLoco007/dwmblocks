@@ -9,23 +9,23 @@ micvol=$(amixer get Capture | awk -F'[][]' 'END{ print $2 }')
 icon=""
 
 case $BUTTON in
-1) dunstify -u low "󰕾" "$icon $micvol\n$icon2 $vol" -u normal ;;
+1) dwm_vol vol && pkill -RTMIN+5 dwmblocks ;;
 2) alacritty -e alsamixer ;;
-3) alacritty -e dwm_vol vol && pkill -RTMIN+5 dwmblocks ;;
+3) dwm_vol mic && pkill -RTMIN+5 dwmblocks ;;
 4)
     dwm_vol up
     dunstify -u low -r 31 -h int:value:$vol "󰕾"
     ;;
 5)
     dwm_vol down
-    dunstify -u low -r 31 "󰕾" -h int:value:$vol 
+    dunstify -u low -r 31 "󰕾" -h int:value:$vol
     ;;
 esac
 
 if [[ "$mic" = 'on' ]]; then
-    icon=""
+    icon=""
 else
-    icon="^c#f78f6f^^d^"
+    icon="^c#f78f6f^^d^"
 fi
 
 if [[ "$volon" = 'on' ]]; then

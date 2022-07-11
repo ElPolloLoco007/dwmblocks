@@ -9,7 +9,6 @@ esac
 
 icon=""
 
-batLeft="$(cat /sys/class/power_supply/BAT0/capacity)"
 
 for battery in /sys/class/power_supply/BAT?*; do
         # If non-first battery, print a space separator.
@@ -26,84 +25,84 @@ for battery in /sys/class/power_supply/BAT?*; do
         capacity="$(cat "$battery/capacity" 2>&1)"
         # full
         if [ "$status" = "full" ]; then
-                icon=""
+                icon=""
         fi
 
         if [ "$status" = "unknown" ]; then
-                icon=""
+                icon=""
         fi
 
         # discarging or not charging
         if [ "$status" = "discharging" ] || [ "$status" = "notchaging" ]; then
 
                 if [ "$capacity" -gt 0 ] && [ "$capacity" -le 10 ]; then
-                        icon="^c#bb5b3e^$capacity%^d^$batLeft%"
+                        icon="^c#bb5b3e^$capacity%^d^"
                         dunstify "low battery" -u critical
                 fi
 
                 if [ "$capacity" -gt 9 ] && [ "$capacity" -le 20 ]; then
-                        icon="^c#bb5b3e^$capacity%^d^$batLeft%"
+                        icon="^c#bb5b3e^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 19 ] && [ "$capacity" -le 30 ]; then
-                        icon="^c#bb5b3e^$capacity%^d^$batLeft%"
+                        icon="^c#bb5b3e^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 29 ] && [ "$capacity" -le 40 ]; then
-                        icon="^c#f78f6f^^d^ $batLeft%"
+                        icon="^c#f78f6f^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 39 ] && [ "$capacity" -le 50 ]; then
-                        icon="^c#f78f6f^^d^$batLeft%"
+                        icon="^c#f78f6f^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 49 ] && [ "$capacity" -le 60 ]; then
-                        icon="^c#ffc6a3^^d^$batLeft%"
+                        icon="^c#ffc6a3^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 59 ] && [ "$capacity" -le 70 ]; then
-                        icon="^c#ffc6a3^^d^$batLeft%"
+                        icon="^c#ffc6a3^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 69 ] && [ "$capacity" -le 80 ]; then
-                        icon="^c#ffc6a3^^d^$batLeft%"
+                        icon="^c#ffc6a3^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 79 ] && [ "$capacity" -le 90 ]; then
-                        icon="^c#7cca69^^d^$batLeft%"
+                        icon="^c#7cca69^$capacity%^d^"
                 fi
 
                 if [ "$capacity" -gt 89 ] && [ "$capacity" -le 100 ]; then
-                        icon="^c#7cca69^^d^$batLeft%"
+                        icon="^c#7cca69^$capacity%^d^"
                 fi
                 if [ "$capacity" -eq 100 ]; then
-                        icon="^c#7cca69^^d^"
+                        icon="^c#7cca69^$capacity%^d^"
                 fi
         fi
 
         if [ "$status" = "charging" ]; then
 
                 if [ "$capacity" -gt 0 ] && [ "$capacity" -le 20 ]; then
-                        icon="^c#007160^^d^"
+                        icon="^c#007160^^d^"
                 fi
 
                 if [ "$capacity" -gt 19 ] && [ "$capacity" -le 40 ]; then
-                        icon="^c#008f65^^d^"
+                        icon="^c#008f65^^d^"
                 fi
 
                 if [ "$capacity" -gt 39 ] && [ "$capacity" -le 60 ]; then
-                        icon="^c#35ad67^^d^"
+                        icon="^c#35ad67^^d^"
                 fi
 
                 if [ "$capacity" -gt 59 ] && [ "$capacity" -le 80 ]; then
-                        icon="^c#7cca69^^d^"
+                        icon="^c#7cca69^^d^"
                 fi
 
                 if [ "$capacity" -gt 79 ] && [ "$capacity" -le 90 ]; then
-                        icon="^c#bde66e^^d^"
+                        icon="^c#bde66e^^d^"
                 fi
                 if [ "$capacity" -gt 89 ]; then
-                        icon="^c#ffff7a^^d^"
+                        icon="^c#ffff7a^^d^"
                 fi
         fi
         printf "%s" "$icon"
