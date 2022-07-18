@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 current="$(cat /sys/class/backlight/amdgpu_bl0/brightness)"
 backlight="$(awk -v n="$current" 'BEGIN{ print int(n/255*100) }')"
 

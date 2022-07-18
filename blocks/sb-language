@@ -2,4 +2,3 @@
 
 kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
 [[ "$kb" == "us" ]] && printf "^c#ffff7a^󰥻$kb^d^" || printf "^c#00f5ff^󰥻$kb^d^"
-

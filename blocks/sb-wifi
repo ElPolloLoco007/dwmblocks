@@ -18,32 +18,34 @@ case $BUTTON in
 esac
 
 if grep -xq 'up' /sys/class/net/w*/operstate 2>/dev/null; then
-    wifiicon="直"
+    wifiicon=""
+    wifistring=""
+    vpn="$(sed "s/.*//" /sys/class/net/nordlynx*/operstate 2>/dev/null)"
+
+    if [ ! -z "$vpn" ]; then
+        wifiicon=$vpn
+    fi
+
     tmp="$(awk 'NR==3 {printf $3}' /proc/net/wireless)"
     wifisignal=${tmp::-1}
     wifiname="$(nmcli -f IN-USE,SIGNAL,SSID device wifi | awk '/^\*/{if (NR!=1) {print $3}}')"
     if [ "$wifisignal" -gt 0 ] && [ "$wifisignal" -le 25 ]; then
-        wifiicon="^c#bb5b3e^ ^d^"
+        wifistring="^c#bb5b3e^$wifiicon^d^"
     fi
     if [ "$wifisignal" -gt 25 ] && [ "$wifisignal" -le 50 ]; then
-        wifiicon="^c#f78f6f^ ^d^"
+        wifistring="^c#f78f6f^$wifiicon^d^"
 
     fi
     if [ "$wifisignal" -gt 49 ] && [ "$wifisignal" -le 75 ]; then
-        wifiicon="^c#ffc6a3^ ^d^"
+        wifistring="^c#ffc6a3^$wifiicon^d^"
 
     fi
     if [ "$wifisignal" -gt 74 ]; then
-        wifiicon="^c#7cca69^ ^d^"
+        wifistring="^c#7cca69^$wifiicon^d^"
     fi
 
 elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null; then
-    wifiicon=""
+    wifistring=""
 fi
-vpn="$(sed "s/.*//" /sys/class/net/tun*/operstate 2>/dev/null)"
 
-if [ -z "$vpn" ]; then
-    printf "%s""$vpn$wifiicon$wifiname"
-else
-    printf "%s""$wifiicon$wifiname"
-fi
+printf "%s""$wifistring $wifiname"
