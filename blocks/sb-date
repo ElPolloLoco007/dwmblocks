@@ -7,4 +7,6 @@ case $BUTTON in
 6) st -e code "$0" ;;
 esac
 
-LC_TIME="fo_FO.UTF-8" date "+%a, %d %b %Y %H:%M"
+C_TIME="fo_FO.UTF-8"
+d="$(date "+%a, %d %b %Y %H:%M")"
+printf "^c#EFD472^$d^d^"

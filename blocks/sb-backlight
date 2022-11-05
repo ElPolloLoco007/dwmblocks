@@ -20,17 +20,17 @@ case $BUTTON in
 esac
 
 if [ "$backlight" -ge 0 ] && [ "$backlight" -le 24 ]; then
-    printf "^c#bb5b3e^󰖨^d^"
+    printf "^c#938884^󰖨^d^"
 fi
 
 if [ "$backlight" -ge 25 ] && [ "$backlight" -le 49 ]; then
-    printf "^c#f78f6f^󰖨^d^"
+    printf "^c#8BB8D0^󰖨^d^"
 fi
 
 if [ "$backlight" -ge 49 ] && [ "$backlight" -le 74 ]; then
-    printf "^c#ffc6a3^󰖨^d^"
+    printf "^c#7EC49D^󰖨^d^"
 fi
 
 if [ "$backlight" -ge 75 ]; then
-    printf "^c#ffff7a^󰖨^d^"
+    printf "^c#EFD472^󰖨^d^"
 fi
