@@ -48,4 +48,4 @@ elif grep -xq 'down' /sys/class/net/w*/operstate 2>/dev/null; then
     wifistring=""
 fi
 
-printf "%s""$wifistring $wifiname"
+printf "%s""$wifistring ^c#DED7D0^$wifiname^d^"

@@ -4,7 +4,7 @@ x="$(ansiweather -l Vestmanna -u metric -w true -s true -d true -a false)"
 temp="$(echo $x | sed 's/-/\n/g' | awk -F' ' 'NR==1 { print $6" "$4 $5 }')"
 wind="$(echo $x | sed 's/-/\n/g' | awk -F' ' 'NR==1 { print $10 $11 }')"
 if [ ! -z "$temp" ]; then
-        echo "|"$temp $wind
+        printf "^c#DED7D0^| $temp $wind^d^"
 else
         echo "|no data"
 fi

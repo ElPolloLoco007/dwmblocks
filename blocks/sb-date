@@ -9,4 +9,4 @@ esac
 
 C_TIME="fo_FO.UTF-8"
 d="$(date "+%a, %d %b %Y %H:%M")"
-printf "^c#EFD472^$d^d^"
+printf "^c#DED7D0^$d^d^"

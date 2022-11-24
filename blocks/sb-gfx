@@ -2,7 +2,7 @@
 
 case $BUTTON in
 1)
-    gfx="$(optimus-manager --status | awk 'NR==3 { print $5 }')"
+    gfx="$(optimus-manager --status | awk 'NR==3 { print $3 }')"
 
     if [ "$gfx" == "nvidia" ]; then
         driver="hybrid"
@@ -17,4 +17,4 @@ case $BUTTON in
     ;;
 esac
 
-echo $(optimus-manager --status | awk 'NR==3 { print $5 }')
+ printf ^c#DED7D0^$(optimus-manager --status | awk 'NR==3 { print $5 }')^d^

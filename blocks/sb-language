@@ -1,4 +1,4 @@
 #!/bin/bash
 
 kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')" || exit 1
-[[ "$kb" == "us" ]] && printf "^c#ffff7a^󰥻$kb^d^" || printf "^c#00f5ff^󰥻$kb^d^"
+[[ "$kb" == "us" ]] && printf "^c#DED7D0^󰥻$kb^d^" || printf "^c#FF7DA3^󰥻$kb^d^"
